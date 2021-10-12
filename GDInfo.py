@@ -137,7 +137,7 @@ def accountExportJson():
     accountExportJsonFile.close()
     print('Успешно!')
 
-print('GDInfo, v. 1.0')
+print('GDInfo, v. 1.11')
 print('Доступные опции:')
 print('1. вывести информацию об уровне')
 print('2. вывести информацию о пользователе')
