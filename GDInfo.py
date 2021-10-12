@@ -1,6 +1,7 @@
+from io import BufferedIOBase
 import requests as r 
 import json
-import time
+aboba = 'bebra'
 
 def levelSearch():
     levelInput = input('Введите название уровня или ID: ')
@@ -121,15 +122,38 @@ def accountSearch():
         print('К аккаунту не привязан Twitch.')
     print()
 
+def levelExportJson():
+    levelExportJsonInput = input('Выберите уровень: ')
+    levelExportJsonGet = r.get('https://gdbrowser.com/api/search/' + levelExportJsonInput + '?count=1')
+    levelExportJsonFile = open(levelExportJsonInput + '.json', 'w')
+    levelExportJsonFile.write(levelExportJsonGet.text)
+    levelExportJsonFile.close()
+    print('Успешно!')
+
+def accountExportJson():
+    accountExportJsonInput = input('Выберите аккаунт: ')
+    accountExportJsonGet = r.get('https://gdbrowser.com/api/profile/' + accountExportJsonInput)
+    accountExportJsonFile = open(accountExportJsonInput + '.json', 'w')
+    accountExportJsonFile.write(accountExportJsonGet.text)
+    accountExportJsonFile.close()
+    print('Успешно!')
 
 print('GDInfo, v. 1.0')
 print('Доступные опции:')
 print('1. вывести информацию об уровне')
 print('2. вывести информацию о пользователе')
-choiceInput = int(input('> '))
-if choiceInput == 1:
-    levelSearch()
-elif choiceInput == 2:
-    accountSearch()
-else:
-    print('Неверный ответ!')
+print('3. экспортировать информацию об уровне в JSON-файл')
+print('4. экспортировать информацию об аккаунте в JSON-файл')
+
+while aboba == 'bebra':
+    choiceInput = input('> ')
+    if choiceInput == '1':
+        levelSearch()
+    elif choiceInput == '2':
+        accountSearch()
+    elif choiceInput == '3':
+        levelExportJson()
+    elif choiceInput == '4':
+        accountExportJson()
+    else:
+        print('Неверный ответ!')
