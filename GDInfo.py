@@ -1,4 +1,3 @@
-from io import BufferedIOBase
 import requests as r 
 import json
 aboba = 'bebra'
