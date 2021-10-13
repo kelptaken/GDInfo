@@ -1,9 +1,12 @@
-import requests as r 
-import json
-aboba = 'bebra'
+# GDInfo by @kelptaken
+# This script is using GNU General Public License v3.0; see the LICENSE file for details. 
+
+import requests as r    # для запросов к API --- for API requests
+import json    # для обработки информации с сервера --- for JSON response parsing
+aboba = 'bebra'    # ¯\_(ツ)_/¯
 
 def levelSearch():
-    levelInput = input('Введите название уровня или ID: ')
+    levelInput = input('Введите название уровня или ID: ')    
     levelJson = r.get('https://gdbrowser.com/api/search/' + levelInput + '?count=1')
     levelInfo = json.loads(levelJson.text)
 
@@ -19,6 +22,8 @@ def levelSearch():
     levelSongAuthor = levelInfo[0]['songAuthor']
     levelSongName = levelInfo[0]['songName']
     levelObjects = levelInfo[0]['objects']
+    levelFeatured = levelInfo[0]['featured']
+    levelEpic = levelInfo[0]['epic']
 
     print()
     print('Имя: ' + levelName)
@@ -26,6 +31,19 @@ def levelSearch():
     print('Описание: ' + levelDesc)
     print('Создатель: ' + levelCreator)
     print('Сложность: ' + levelDifficulty)
+    if levelFeatured == True:
+        print('Featured - есть')
+    elif levelFeatured == False:
+        print('Featured - нет')
+    else:
+        print('levelFeatured: недостоверный ответ от сервера.')
+    
+    if levelEpic == True:
+        print('Epic - есть')
+    elif levelEpic == False:
+        print('Epic - нет')
+    else:
+        print('levelEpic: недостоверный ответ от сервера.')
     print('Скачиваний: ' + str(levelDownloads))
     print('Лайков: ' + str(levelLikes))
     print('Длительность: ' + levelLength)
@@ -164,6 +182,8 @@ def levelSearchDebug():
     levelSongAuthor = levelInfo[0]['songAuthor']
     levelSongName = levelInfo[0]['songName']
     levelObjects = levelInfo[0]['objects']
+    levelFeatured = levelInfo[0]['featured']
+    levelEpic = levelInfo[0]['epic']
 
     print()
     print('In vars:')
@@ -182,6 +202,20 @@ def levelSearchDebug():
         print('levelObjects = 0')
     else:
         print(str(levelObjects) + ' objects')
+    
+    if levelFeatured == True:
+        print('levelFeatured: True')
+    elif levelFeatured == False:
+        print('levelFeatured: False')
+    else:
+        print('wrong_response')
+    
+    if levelEpic == True:
+        print('levelEpic: True')
+    elif levelEpic == False:
+        print('levelEpic: False')
+    else:
+        print('wrong_response')
     print()
 
 def accountSearchDebug():
@@ -278,7 +312,7 @@ def accountSearchDebug():
         print('accountTwitch: None')
     print()
 
-print('GDInfo, v1.2')
+print('GDInfo, v1.3')
 print('Доступные опции:')
 print('1. вывести информацию об уровне')
 print('2. вывести информацию о пользователе')
