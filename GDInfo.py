@@ -1,9 +1,9 @@
 # GDInfo by @kelptaken
 # This script is using GNU General Public License v3.0; see the LICENSE file for details. 
 
-import requests as r    # для запросов к API --- for API requests
-import json    # для обработки информации с сервера --- for JSON response parsing
-aboba = 'bebra'    # ¯\_(ツ)_/¯
+import requests as r
+import json
+aboba = 'bebra'
 
 def levelSearch():
     levelInput = input('Введите название уровня или ID: ')    
@@ -312,12 +312,57 @@ def accountSearchDebug():
         print('accountTwitch: None')
     print()
 
-print('GDInfo, v1.3')
+def accountIconDL():
+    iconDlInput = input(str('Введите имя аккаунта, с которого взять иконку: '))
+    print('Выберите тип иконки:')
+    print('1. cube')
+    print('2. ship')
+    print('3. ball')
+    print('4. ufo')
+    print('5. wave')
+    print('6. robot')
+    print('7. spider')
+    iconDlTypeInput = input(str('Тип иконки: '))
+    url = 'https://gdbrowser.com/icon/' + iconDlInput
+
+    if iconDlTypeInput == '1':
+        iconDlResult = r.get(url + '?form=cube')
+        open(iconDlInput + '_' + iconDlTypeInput + '.png', 'wb').write(iconDlResult.content)
+        print('Успешно!')
+    elif iconDlTypeInput == '2':
+        iconDlResult = r.get(url + '?form=ship')
+        open(iconDlInput + '_' + iconDlTypeInput + '.png', 'wb').write(iconDlResult.content)
+        print('Успешно!')
+    elif iconDlTypeInput == '3':
+        iconDlResult = r.get(url + '?form=ball')
+        open(iconDlInput + '_' + iconDlTypeInput + '.png', 'wb').write(iconDlResult.content)
+        print('Успешно!')
+    elif iconDlTypeInput == '4':
+        iconDlResult = r.get(url + '?form=ufo')
+        open(iconDlInput + '_' + iconDlTypeInput + '.png', 'wb').write(iconDlResult.content)
+        print('Успешно!')
+    elif iconDlTypeInput == '5':
+        iconDlResult = r.get(url + '?form=wave')
+        open(iconDlInput + '_' + iconDlTypeInput + '.png', 'wb').write(iconDlResult.content)
+        print('Успешно!')
+    elif iconDlTypeInput == '6':
+        iconDlResult = r.get(url + '?form=robot')
+        open(iconDlInput + '_' + iconDlTypeInput + '.png', 'wb').write(iconDlResult.content)
+        print('Успешно!')
+    elif iconDlTypeInput == '7':
+        iconDlResult = r.get(url + '?form=spider')
+        open(iconDlInput + '_' + iconDlTypeInput + '.png', 'wb').write(iconDlResult.content)
+        print('Успешно!')
+    
+print('GDInfo, v1.4')
 print('Доступные опции:')
 print('1. вывести информацию об уровне')
 print('2. вывести информацию о пользователе')
 print('3. экспортировать информацию об уровне в JSON-файл')
 print('4. экспортировать информацию об аккаунте в JSON-файл')
+print('5. вывести информацию об уровне (режим разработчика)')
+print('6. вывести информацию о пользователе (режим разработчика)')
+print('7. скачать иконку пользователя')
 
 while aboba == 'bebra':
     choiceInput = input('> ')
@@ -333,5 +378,7 @@ while aboba == 'bebra':
         levelSearchDebug()
     elif choiceInput == '6':
         accountSearchDebug()
+    elif choiceInput == '7':
+        accountIconDL()
     else:
         print('Неверный ответ!')
