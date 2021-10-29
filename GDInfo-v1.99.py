@@ -24,10 +24,10 @@ debug_info = bold + blue + '[·] ' + r_color + r_style
 debug_fail = bold + red + '[!] ' + r_color + r_style
 
 
-def showOptions():
+def ShowOptions():
     print(bold + yellow + 'GDInfo, v1.99' + r_color + r_style + dim + '  by kelptaken' + r_style)
     print(bold + 'Available options:' + r_style)
-    print(bold + '0. (help) ' + r_style + 'Show available options')
+    print(bold + '0. (help): ' + r_style + 'Show available options')
     print(bold + '1. ' + r_style + 'Level info')
     print(bold + '2. ' + r_style + 'Account info')
     print(bold + '3. ' + r_style + 'Export level info in JSON')
@@ -37,7 +37,7 @@ def showOptions():
     print(bold + '7. ' + r_style + 'Download user icon')
 
 
-def ShowLevelInfo(Level):
+def LevelInfo_Output(Level):
     # The thing below is taking all the variables from LevelInfo module
     LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelInfo.LevelInfo(
         Level)
@@ -81,7 +81,7 @@ def ShowLevelInfo(Level):
     print()
 
 
-def ShowAccountInfo(Account):
+def AccountInfo_Output(Account):
     # Take vars from AccountInfo
     AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountInfo.AccountInfo(
         Account)
@@ -177,7 +177,7 @@ def ShowAccountInfo(Account):
     print()
 
 
-def ExportLevelJson(Level):
+def LevelExportJson_Output(Level):
     LevelExportJson_Content = ExportJson.LevelExportJson(Level)
     LevelExportJson_File = open(Level + '.json', 'w')
     LevelExportJson_File.write(LevelExportJson_Content)
@@ -355,18 +355,18 @@ def DownloadIcon(Account, Type):
     open(Account + '_' + Type + '.png', 'wb').write(AccountIconDL_Icon)
     print('Success!')
 
-showOptions()
+ShowOptions()
 while True:
     choiceInput = input('> ')
     if choiceInput == '1':
         LevelInput = input('Level name or ID: ')
-        ShowLevelInfo(LevelInput)
+        LevelInfo_Output(LevelInput)
     elif choiceInput == '2':
         AccountInput = input('Account name or ID: ')
-        ShowAccountInfo(AccountInput)
+        AccountInfo_Output(AccountInput)
     elif choiceInput == '3':
         LevelInput = input('Level name or ID: ')
-        ExportLevelJson(LevelInput)
+        LevelExportJson_Output(LevelInput)
     elif choiceInput == '4':
         AccountInput = input('Account name or ID: ')
         ExportAccountJson(AccountInput)
@@ -389,6 +389,6 @@ while True:
         AccountIconDL_TypeInput = input(str('Icon type: '))
         DownloadIcon(AccountIconDL_AccountInput, AccountIconDL_TypeInput)
     elif choiceInput == '0' or 'help' or 'options' or 'commands':
-        showOptions()
+        ShowOptions()
     else:
         print('Uhm...')
