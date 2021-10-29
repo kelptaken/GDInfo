@@ -2,13 +2,13 @@
 # This script is using GNU General Public License v3.0; see the LICENSE
 # file for details.
 
-from typing import Match, cast
 import requests as r
 import json
 from colorama import init, Fore, Style
 from modules import LevelInfo
 from modules import AccountInfo
 from modules import ExportJson
+from modules import AccountIconDL
 
 # Define some handy vars
 dim = Style.DIM
@@ -23,15 +23,29 @@ debug_success = bold + green + '[·] ' + r_color + r_style
 debug_info = bold + blue + '[·] ' + r_color + r_style
 debug_fail = bold + red + '[!] ' + r_color + r_style
 
+
+def showOptions():
+    print(bold + yellow + 'GDInfo, v1.99' + r_color + r_style + dim + '  by kelptaken' + r_style)
+    print(bold + 'Available options:' + r_style)
+    print(bold + '0. (help) ' + r_style + 'Show available options')
+    print(bold + '1. ' + r_style + 'Level info')
+    print(bold + '2. ' + r_style + 'Account info')
+    print(bold + '3. ' + r_style + 'Export level info in JSON')
+    print(bold + '4. ' + r_style + 'Export account info in JSON')
+    print(bold + '5. ' + r_style + 'Level info ' + dim + '(debug mode)' + r_style)
+    print(bold + '6. ' + r_style + 'Account info ' + dim + '(debug mode)' + r_style)
+    print(bold + '7. ' + r_style + 'Download user icon')
+
+
 def ShowLevelInfo(Level):
     # The thing below is taking all the variables from LevelInfo module
-    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelInfo.LevelInfo(Level)
-
+    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelInfo.LevelInfo(
+        Level)
 
     # Show the info
     print()
     print(bold + 'Name: ' + r_style + LevelInfo_Name)
-    print(bold +'ID: ' + r_style + LevelInfo_ID)
+    print(bold + 'ID: ' + r_style + LevelInfo_ID)
     print(bold + 'Description: ' + r_style + LevelInfo_Description)
     print(bold + 'Creator: ' + r_style + LevelInfo_Creator)
     print(bold + 'Difficulty: ' + r_style + LevelInfo_Difficulty)
@@ -40,24 +54,28 @@ def ShowLevelInfo(Level):
     elif LevelInfo_isFeatured == False:
         print(red + '✕ ' + r_color + bold + 'Featured: ' + r_style + 'false')
     else:
-        print(bold + 'Featured: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Featured: ' + r_style +
+              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     if LevelInfo_isEpic == True:
         print(green + '☑ ' + r_color + bold + 'Epic: ' + r_style + 'true')
     elif LevelInfo_isEpic == False:
         print(red + '✕ ' + r_color + bold + 'Epic: ' + r_style + 'false')
     else:
-        print(bold + 'Epic: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
-    
+        print(bold + 'Epic: ' + r_style +
+              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+
     print(bold + 'Downloads: ' + r_style + LevelInfo_Downloads)
     print(bold + 'Likes: ' + r_style + LevelInfo_Likes)
     print(bold + 'Length: ' + r_style + LevelInfo_Length)
     print(bold + 'Song: ' + r_style + LevelInfo_Song)
-    print(bold +'Song ID:  ' + r_style + LevelInfo_SongID)
-    print(bold + 'Song on Newgrounds: ' + r_style + LevelInfo_SongNewgroundsLink)
-    
+    print(bold + 'Song ID:  ' + r_style + LevelInfo_SongID)
+    print(bold + 'Song on Newgrounds: ' +
+          r_style + LevelInfo_SongNewgroundsLink)
+
     if LevelInfo_Objects == '0':
-        print(bold + 'Objects: ' + r_style + 'unknown, level copying may be locked')
+        print(bold + 'Objects: ' + r_style +
+              'unknown, level copying may be locked')
     else:
         print(bold + 'Objects: ' + r_style + LevelInfo_Objects)
     print()
@@ -65,7 +83,8 @@ def ShowLevelInfo(Level):
 
 def ShowAccountInfo(Account):
     # Take vars from AccountInfo
-    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountInfo.AccountInfo(Account)
+    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountInfo.AccountInfo(
+        Account)
 
     # Show info
     print()
@@ -81,11 +100,14 @@ def ShowAccountInfo(Account):
     if AccountInfo_IsModerator == 0:
         print(red + '✕ ' + r_color + bold + 'Moderator: ' + r_style + 'false')
     elif AccountInfo_IsModerator == 1:
-        print(green + '☑ ' + r_color + bold + 'Moderator: ' + r_style + 'true, regular mod')
+        print(green + '☑ ' + r_color + bold +
+              'Moderator: ' + r_style + 'true, regular mod')
     elif AccountInfo_IsModerator == 2:
-        print(green + '☑ ' + r_color + bold + 'Moderator: ' + r_style + 'true, elder mod')
+        print(green + '☑ ' + r_color + bold +
+              'Moderator: ' + r_style + 'true, elder mod')
     else:
-        print(bold + 'Moderator: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Moderator: ' + r_style +
+              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     print()
 
@@ -94,50 +116,62 @@ def ShowAccountInfo(Account):
 
     # Friend requests
     if AccountInfo_Privacy_FriendRequests == True:
-        print(green + '☑ ' + r_color + bold + 'Friend requests: ' + r_style + 'allowed')
+        print(green + '☑ ' + r_color + bold +
+              'Friend requests: ' + r_style + 'allowed')
     else:
-        print(red + '✕ ' + r_color + bold + 'Friend requests: ' + r_style + 'not allowed')
+        print(red + '✕ ' + r_color + bold +
+              'Friend requests: ' + r_style + 'not allowed')
 
     # Messages
     if AccountInfo_Privacy_Messages == 'all':
-        print(green + '☑ ' + r_color + bold + 'Messages: ' + r_style + 'anyone')
+        print(green + '☑ ' + r_color + bold +
+              'Messages: ' + r_style + 'anyone')
     elif AccountInfo_Privacy_Messages == 'friends':
-        print(yellow + '□ ' + r_color + bold + 'Messages: ' + r_style + 'only friends')
+        print(yellow + '□ ' + r_color + bold +
+              'Messages: ' + r_style + 'only friends')
     elif AccountInfo_Privacy_Messages == 'off':
         print(red + '✕ ' + r_color + bold + 'Messages: ' + r_style + 'off')
     else:
-        print(bold + 'Messages: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Messages: ' + r_style +
+              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     # Comment history
     if AccountInfo_Privacy_CommentHistory == 'all':
-        print(green + '☑ ' + r_color + bold + 'Comment history: ' + r_style + 'anyone')
+        print(green + '☑ ' + r_color + bold +
+              'Comment history: ' + r_style + 'anyone')
     elif AccountInfo_Privacy_CommentHistory == 'friends':
-        print(yellow + '□ ' + r_color + bold + 'Comment history: ' + r_style + 'only friends')
+        print(yellow + '□ ' + r_color + bold +
+              'Comment history: ' + r_style + 'only friends')
     elif AccountInfo_Privacy_CommentHistory == 'off':
-        print(red + '✕ ' + r_color + bold + 'Comment history: ' + r_style + 'off')
+        print(red + '✕ ' + r_color + bold +
+              'Comment history: ' + r_style + 'off')
     else:
-        print(bold + 'Comment history: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Comment history: ' + r_style +
+              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     print()
 
     # Social media
     print('Social media:')
-    
+
     # YouTube
     if AccountInfo_SM_YouTube != 'None':
-        print(bold + 'YouTube: ' + r_style + 'https://youtube.com/channel/' + AccountInfo_SM_YouTube)
+        print(bold + 'YouTube: ' + r_style +
+              'https://youtube.com/channel/' + AccountInfo_SM_YouTube)
     else:
         print(bold + 'YouTube: ' + r_style + 'not linked.')
 
     # Twitter
     if AccountInfo_SM_Twitter != 'None':
-        print(bold + 'Twitter: ' + r_style + 'https://twitter.com/' + AccountInfo_SM_Twitter)
+        print(bold + 'Twitter: ' + r_style +
+              'https://twitter.com/' + AccountInfo_SM_Twitter)
     else:
         print(bold + 'Twitter: ' + r_style + 'not linked.')
 
     # Twitch
     if AccountInfo_SM_Twitch != 'None':
-        print(bold + 'Twitch: ' + r_style + 'https://twitch.tv/' + AccountInfo_SM_Twitch)
+        print(bold + 'Twitch: ' + r_style +
+              'https://twitch.tv/' + AccountInfo_SM_Twitch)
     else:
         print(bold + 'Twitch: ' + r_style + 'not linked. ')
     print()
@@ -160,9 +194,10 @@ def ExportAccountJson(Account):
 
 
 def LevelInfoDebug(Level):
-    print(bold + '!!! DEBUG MODE ON !!!' + r_style)
+    print(bold + '!!! DEBUG MODE !!!' + r_style)
 
-    print(debug_info + bold + 'Calling LevelInfo.LevelInfo(Level) to get variables...' + r_style)
+    print(debug_info + bold +
+          'Calling LevelInfo.LevelInfo(Level) to get variables...' + r_style)
     LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelInfo.LevelInfo(Level)
     print(debug_success + bold + 'Success!' + r_style)
     print()
@@ -182,226 +217,145 @@ def LevelInfoDebug(Level):
     print(bold + 'LevelInfo_Creator: ' + r_style + LevelInfo_Creator)
     print(bold + 'LevelInfo_Difficulty: ' + r_style + LevelInfo_Difficulty)
     if LevelInfo_isFeatured == True:
-        print(green + '☑ ' + r_color + bold + 'LevelInfo_isFeatured: ' + r_style + 'True')
+        print(green + '☑ ' + r_color + bold +
+              'LevelInfo_isFeatured: ' + r_style + 'True')
     elif LevelInfo_isFeatured == False:
-        print(red + '✕ ' + r_color + bold + 'LevelInfo_isFeatured: ' + r_style + 'False')
+        print(red + '✕ ' + r_color + bold +
+              'LevelInfo_isFeatured: ' + r_style + 'False')
     else:
-        print(bold + 'LevelInfo_isFeatured: ' + r_style + '"else" state in the code happened.')
-        print(debug_fail + bold + "Looks like there's a problem with LevelInfo_isFeatured." + r_style)
+        print(bold + 'LevelInfo_isFeatured: ' + r_style +
+              '"else" state in the code happened.')
+        print(debug_fail + bold +
+              "Looks like there's a problem with LevelInfo_isFeatured." + r_style)
 
     if LevelInfo_isEpic == True:
-        print(green + '☑ ' + r_color + bold + 'LevelInfo_isEpic: ' + r_style + 'true')
+        print(green + '☑ ' + r_color + bold +
+              'LevelInfo_isEpic: ' + r_style + 'true')
     elif LevelInfo_isEpic == False:
-        print(red + '✕ ' + r_color + bold + 'LevelInfo_isEpic: ' + r_style + 'false')
+        print(red + '✕ ' + r_color + bold +
+              'LevelInfo_isEpic: ' + r_style + 'false')
     else:
-        print(bold + 'LevelInfo_isEpic: ' + r_style + '"else" state in the code happened.')
-        print(debug_fail + bold + "Looks like there's a problem with LevelInfo_isEpic." + r_style)
-    
+        print(bold + 'LevelInfo_isEpic: ' + r_style +
+              '"else" state in the code happened.')
+        print(debug_fail + bold +
+              "Looks like there's a problem with LevelInfo_isEpic." + r_style)
+
     print(bold + 'LevelInfo_Downloads: ' + r_style + LevelInfo_Downloads)
     print(bold + 'LevelInfo_Likes: ' + r_style + LevelInfo_Likes)
     print(bold + 'LevelInfo_Length: ' + r_style + LevelInfo_Length)
     print(bold + 'LevelInfo_Song: ' + r_style + LevelInfo_Song)
-    print(bold +'LevelInfo_SongID:  ' + r_style + LevelInfo_SongID)
-    print(bold + 'LevelInfo_SongNewgroundsLink: ' + r_style + LevelInfo_SongNewgroundsLink)
-    
+    print(bold + 'LevelInfo_SongID:  ' + r_style + LevelInfo_SongID)
+    print(bold + 'LevelInfo_SongNewgroundsLink: ' +
+          r_style + LevelInfo_SongNewgroundsLink)
+
     if LevelInfo_Objects == '0':
         print(bold + 'LevelInfo_Objects: ' + r_style + '0')
-        print(debug_info + bold + '0 objects. It looks like level copying is locked or unavailable.')
+        print(debug_info + bold +
+              '0 objects. It looks like level copying is locked or unavailable.')
     else:
         print(bold + 'LevelInfo_Objects: ' + r_style + LevelInfo_Objects)
     print()
 
 
-def accountSearchDebug():
-    print('!!! ВКЛЮЧЕН РЕЖИМ РАЗРАБОТЧИКА !!!')
-    accountInput = input('Введите имя аккаунта или ID: ')
-    accountJson = r.get('https://gdbrowser.com/api/profile/' + accountInput)
-    accountInfo = json.loads(accountJson.text)
-
-    accountName = accountInfo['username']
-    accountId = accountInfo['accountID']
-    accountPlayerID = accountInfo['playerID']
-    accountStars = accountInfo['stars']
-    accountDiamonds = accountInfo['diamonds']
-    accountOffCoins = accountInfo['coins']
-    accountUserCoins = accountInfo['userCoins']
-    accountDemons = accountInfo['demons']
-    accountCP = accountInfo['cp']
-    accountFriendRequests = accountInfo['friendRequests']
-    accountMessages = accountInfo['messages']
-    accountCommentHistory = accountInfo['commentHistory']
-    accountIsModerator = accountInfo['moderator']
-    accountYouTube = str(accountInfo['youtube'])
-    accountTwitter = str(accountInfo['twitter'])
-    accountTwitch = str(accountInfo['twitch'])
-
+def AccountInfoDebug(Account):
+    print(bold + '!!! DEBUG MODE !!!' + r_style)
+    print(debug_info + bold + 'Calling AccountInfo.AccountInfo(Account) to get variables...' + r_style)
+    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountInfo.AccountInfo(Account)
+    print(debug_success + bold + 'Success!' + r_style)
     print()
-    print('Request sent to https://gdbrowser.com/api/profile/' + accountInput)
-    print('API response:')
-    print(accountJson.text)
+    print(debug_info + bold + 'Server response code: ' + r_style + str(AccountInfo_jsonResponse))
     print()
-    print('Converted to dict:')
-    print(accountInfo)
-
+    print(debug_info + bold + 'Server response content: ' + r_style)
+    print(AccountInfo_jsonResponse.text)
     print()
-    print('In vars:')
-    print('accountName: ' + accountName)
-    print('accountId: ' + str(accountId))
-    print('accountPlayerID: ' + str(accountPlayerID))
-    print('accountStars: ' + str(accountStars))
-    print('accountDiamonds: ' + str(accountDiamonds))
-    print('accountOffCoins: ' + str(accountOffCoins))
-    print('accountUserCoins: ' + str(accountUserCoins))
-    print('accountDemons: ' + str(accountDemons))
-    print('accountCP: ' + str(accountCP))
-    if accountIsModerator == 0:
-        print('accountIsModerator = 0')
-    elif accountIsModerator == 1:
-        print('accountIsModerator = 1')
-    elif accountIsModerator == 2:
-        print('accountIsModerator = 2')
+    print(debug_info + bold + 'Parsing...' + r_style)
+    print(AccountInfo_dict)
+    print()
+    print(debug_success + bold + 'Success!' + r_style)
+    print()
+    print(bold + 'AccountInfo_Name: ' + r_style + AccountInfo_Name)
+    print(bold + 'AccountInfo_AccountID: ' + r_style + AccountInfo_AccountID)
+    print(bold + 'AccountInfo_PlayerID: ' + r_style + AccountInfo_PlayerID)
+    print(bold + 'AccountInfo_Stars: ' + r_style + AccountInfo_Stars)
+    print(bold + 'AccountInfo_Diamonds: ' + r_style + AccountInfo_Diamonds)
+    print(bold + 'AccountInfo_OffCoins: ' + r_style + AccountInfo_OffCoins)
+    print(bold + 'AccountInfo_UserCoins: ' + r_style + AccountInfo_UserCoins)
+    print(bold + 'AccountInfo_Demons: ' + r_style + AccountInfo_Demons)
+    print('AccountInfo_CP: ' + AccountInfo_CP)
+    if AccountInfo_IsModerator == 0:
+        print(red + '✕ ' + r_color + bold + 'AccountInfo_isModerator: ' + r_style + '0')
+    elif AccountInfo_IsModerator == 1:
+        print(green + '☑ ' + r_color + bold + 'AccountInfo_isModerator: ' + r_style + '1')
+    elif AccountInfo_IsModerator == 2:
+        print(green + '☑ ' + r_color + bold + 'AccountInfo_isModerator: ' + r_style + '2')
     else:
-        print('wrong_response')
+        print(bold + 'AccountInfo_isModerator: ' + r_style + '"else" state in the code happened.')
 
     print()
 
-    print('security: ')
-    if accountFriendRequests == True:
-        print('accountFriendRequests = True')
-    else:
-        print('accountFriendRequests = False')
+    # Privacy block
+    print('Privacy: ')
 
-    if accountMessages == 'all':
-        print('accountMessages = all')
-    elif accountMessages == 'friends':
-        print('accountMessages = friends')
-    elif accountMessages == 'off':
-        print('accountMessages = off')
+    # Friend requests
+    if AccountInfo_Privacy_FriendRequests == True:
+        print(green + '☑ ' + r_color + bold + 'AccountInfo_Privacy_FriendRequests: ' + r_style + 'True')
     else:
-        print('wrong_response')
+        print(red + '✕ ' + r_color + bold + 'AccountInfo_Privacy_FriendRequests: ' + r_style + 'False')
 
-    if accountCommentHistory == 'all':
-        print('accountCommentHistory = all')
-    elif accountCommentHistory == 'friends':
-        print('accountCommentHistory = friends')
-    elif accountCommentHistory == 'off':
-        print('accountCommentHistory = off')
+    # Messages
+    if AccountInfo_Privacy_Messages == 'all':
+        print(green + '☑ ' + r_color + bold + 'AccountInfo_Privacy_Messages: ' + r_style + 'all')
+    elif AccountInfo_Privacy_Messages == 'friends':
+        print(yellow + '□ ' + r_color + bold + 'AccountInfo_Privacy_Messages: ' + r_style + 'friends')
+    elif AccountInfo_Privacy_Messages == 'off':
+        print(red + '✕ ' + r_color + bold + 'AccountInfo_Privacy_Messages: ' + r_style + 'off')
     else:
-        print('wrong_response')
+        print(bold + 'AccountInfo_Privacy_Messages: ' + r_style + '"else" state in the code happened. ')
+
+    # Comment history
+    if AccountInfo_Privacy_CommentHistory == 'all':
+        print(green + '☑ ' + r_color + bold + 'AccountInfo_Privacy_CommentHistory: ' + r_style + 'all')
+    elif AccountInfo_Privacy_CommentHistory == 'friends':
+        print(yellow + '□ ' + r_color + bold + 'AccountInfo_Privacy_CommentHistory: ' + r_style + 'friends')
+    elif AccountInfo_Privacy_CommentHistory == 'off':
+        print(red + '✕ ' + r_color + bold + 'AccountInfo_Privacy_CommentHistory: ' + r_style + 'off')
+    else:
+        print(bold + 'Comment history: ' + r_style + '"else" state in the code happened.')
 
     print()
 
-    print('social:')
-    if accountYouTube != 'None':
-        print('accountYouTube: ' + accountYouTube)
+    # Social media
+    print('Social media:')
+
+    # YouTube
+    if AccountInfo_SM_YouTube != 'None':
+        print(bold + 'AccountInfo_SM_YouTube: ' + r_style +
+              'https://youtube.com/channel/' + AccountInfo_SM_YouTube)
     else:
-        print('accountYouTube: None')
-    if accountTwitter != 'None':
-        print('accountTwitter: ' + accountTwitter)
+        print(bold + 'AccountInfo_SM_YouTube: ' + r_style + 'None')
+
+    # Twitter
+    if AccountInfo_SM_Twitter != 'None':
+        print(bold + 'AccountInfo_SM_Twitter: ' + r_style +
+              'https://twitter.com/' + AccountInfo_SM_Twitter)
     else:
-        print('accountTwitter: None')
-    if accountTwitch != 'None':
-        print('accountTwitch: ' + accountTwitch)
+        print(bold + 'Twitter: ' + r_style + 'None')
+
+    # Twitch
+    if AccountInfo_SM_Twitch != 'None':
+        print(bold + 'AccountInfo_SM_Twitch: ' + r_style +
+              'https://twitch.tv/' + AccountInfo_SM_Twitch)
     else:
-        print('accountTwitch: None')
+        print(bold + 'AccountInfo_SM_Twitch: ' + r_style + 'None')
     print()
 
 
-def accountIconDL():
-    iconDlInput = input(str('Введите имя аккаунта, с которого взять иконку: '))
-    print('Выберите тип иконки:')
-    print('1. cube')
-    print('2. ship')
-    print('3. ball')
-    print('4. ufo')
-    print('5. wave')
-    print('6. robot')
-    print('7. spider')
-    iconDlTypeInput = input(str('Тип иконки: '))
-    url = 'https://gdbrowser.com/icon/' + iconDlInput
+def DownloadIcon(Account, Type):
+    AccountIconDL_Icon = AccountIconDL.AccountIconDL(Account, Type)
+    open(Account + '_' + Type + '.png', 'wb').write(AccountIconDL_Icon)
+    print('Success!')
 
-    if iconDlTypeInput == '1':
-        iconDlResult = r.get(url + '?form=cube')
-        open(
-            iconDlInput +
-            '_' +
-            iconDlTypeInput +
-            '.png',
-            'wb').write(
-            iconDlResult.content)
-        print('Успешно!')
-    elif iconDlTypeInput == '2':
-        iconDlResult = r.get(url + '?form=ship')
-        open(
-            iconDlInput +
-            '_' +
-            iconDlTypeInput +
-            '.png',
-            'wb').write(
-            iconDlResult.content)
-        print('Успешно!')
-    elif iconDlTypeInput == '3':
-        iconDlResult = r.get(url + '?form=ball')
-        open(
-            iconDlInput +
-            '_' +
-            iconDlTypeInput +
-            '.png',
-            'wb').write(
-            iconDlResult.content)
-        print('Успешно!')
-    elif iconDlTypeInput == '4':
-        iconDlResult = r.get(url + '?form=ufo')
-        open(
-            iconDlInput +
-            '_' +
-            iconDlTypeInput +
-            '.png',
-            'wb').write(
-            iconDlResult.content)
-        print('Успешно!')
-    elif iconDlTypeInput == '5':
-        iconDlResult = r.get(url + '?form=wave')
-        open(
-            iconDlInput +
-            '_' +
-            iconDlTypeInput +
-            '.png',
-            'wb').write(
-            iconDlResult.content)
-        print('Успешно!')
-    elif iconDlTypeInput == '6':
-        iconDlResult = r.get(url + '?form=robot')
-        open(
-            iconDlInput +
-            '_' +
-            iconDlTypeInput +
-            '.png',
-            'wb').write(
-            iconDlResult.content)
-        print('Успешно!')
-    elif iconDlTypeInput == '7':
-        iconDlResult = r.get(url + '?form=spider')
-        open(
-            iconDlInput +
-            '_' +
-            iconDlTypeInput +
-            '.png',
-            'wb').write(
-            iconDlResult.content)
-        print('Успешно!')
-
-
-print(bold + yellow + 'GDInfo, v1.99' + r_color + r_style + dim + '  by kelptaken' + r_style)
-print(bold + 'Available options:' + r_style)
-print(bold + '1. ' + r_style + 'Level info')
-print(bold + '2. ' + r_style + 'Account info')
-print(bold + '3. ' + r_style + 'Export level info in JSON')
-print(bold + '4. ' + r_style + 'Export account info in JSON')
-print(bold + '5. ' + r_style + 'Level info ' + dim + '(debug mode)' + r_style)
-print(bold + '6. ' + r_style + 'Account info ' + dim + '(debug mode)' + r_style)
-print(bold + '7. ' + r_style + 'Download user icon')
-
+showOptions()
 while True:
     choiceInput = input('> ')
     if choiceInput == '1':
@@ -414,13 +368,27 @@ while True:
         LevelInput = input('Level name or ID: ')
         ExportLevelJson(LevelInput)
     elif choiceInput == '4':
+        AccountInput = input('Account name or ID: ')
         ExportAccountJson(AccountInput)
     elif choiceInput == '5':
         LevelInput = input('Level name or ID: ')
         LevelInfoDebug(LevelInput)
     elif choiceInput == '6':
-        accountSearchDebug()
+        AccountInput = input('Account name or ID: ')
+        AccountInfoDebug(AccountInput)
     elif choiceInput == '7':
-        accountIconDL()
+        AccountIconDL_AccountInput = input(str('Account name or ID: '))
+        print('Select icon type:')
+        print('1. Cube')
+        print('2. Ship')
+        print('3. Ball')
+        print('4. UFO')
+        print('5. Wave')
+        print('6. Robot')
+        print('7. Spider')
+        AccountIconDL_TypeInput = input(str('Icon type: '))
+        DownloadIcon(AccountIconDL_AccountInput, AccountIconDL_TypeInput)
+    elif choiceInput == '0' or 'help' or 'options' or 'commands':
+        showOptions()
     else:
-        print('Неверный ответ!')
+        print('Uhm...')
