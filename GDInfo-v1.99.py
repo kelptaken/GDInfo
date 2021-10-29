@@ -17,9 +17,7 @@ r_color = Fore.RESET
 # Show level info
 def LevelInfo(Level):
     LevelInfo_jsonResponse = r.get(
-        'https://gdbrowser.com/api/search/' +
-        Level +
-        '?count=1')
+        'https://gdbrowser.com/api/search/' + Level + '?count=1')
     LevelInfo_dict = json.loads(LevelInfo_jsonResponse.text)
 
     # Native variables
