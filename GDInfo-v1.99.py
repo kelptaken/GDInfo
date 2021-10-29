@@ -2,44 +2,30 @@
 # This script is using GNU General Public License v3.0; see the LICENSE
 # file for details.
 
+from typing import Match, cast
 import requests as r
 import json
 from colorama import init, Fore, Style
+from modules import LevelInfo
+from modules import AccountInfo
+from modules import ExportJson
 
-# Define some handy color vars
+# Define some handy vars
 dim = Style.DIM
 red = Fore.RED
 green = Fore.GREEN
+yellow = Fore.YELLOW
+blue = Fore.BLUE
 bold = Style.BRIGHT
 r_style = Style.RESET_ALL
 r_color = Fore.RESET
+debug_success = bold + green + '[·] ' + r_color + r_style
+debug_info = bold + blue + '[·] ' + r_color + r_style
+debug_fail = bold + red + '[!] ' + r_color + r_style
 
-# Show level info
-def LevelInfo(Level):
-    LevelInfo_jsonResponse = r.get(
-        'https://gdbrowser.com/api/search/' + Level + '?count=1')
-    LevelInfo_dict = json.loads(LevelInfo_jsonResponse.text)
-
-    # Native variables
-    # P. S. dict entries that contain numbers are automatically converted to str for easy concatenating
-    LevelInfo_Name = LevelInfo_dict[0]['name']
-    LevelInfo_ID = str(LevelInfo_dict[0]['id'])
-    LevelInfo_Description = LevelInfo_dict[0]['description']
-    LevelInfo_Creator = LevelInfo_dict[0]['author']
-    LevelInfo_Difficulty = LevelInfo_dict[0]['difficulty']
-    LevelInfo_Downloads = str(LevelInfo_dict[0]['downloads'])
-    LevelInfo_Likes = str(LevelInfo_dict[0]['likes'])
-    LevelInfo_Length = LevelInfo_dict[0]['length']
-    LevelInfo_SongID = str(LevelInfo_dict[0]['customSong'])
-    LevelInfo_SongCreator = LevelInfo_dict[0]['songAuthor']
-    LevelInfo_SongName = LevelInfo_dict[0]['songName']
-    LevelInfo_Objects = str(LevelInfo_dict[0]['objects'])
-    LevelInfo_isFeatured = LevelInfo_dict[0]['featured']
-    LevelInfo_isEpic = LevelInfo_dict[0]['epic']
-
-    # Custom variables
-    LevelInfo_Song = (LevelInfo_SongCreator + ' - ' + LevelInfo_SongName)
-    LevelInfo_SongNewgroundsLink = ('https://www.newgrounds.com/audio/listen/' + LevelInfo_SongID)
+def ShowLevelInfo(Level):
+    # The thing below is taking all the variables from LevelInfo module
+    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelInfo.LevelInfo(Level)
 
 
     # Show the info
@@ -77,181 +63,152 @@ def LevelInfo(Level):
     print()
 
 
-def AccountInfo(Account):
-    AccountInfo_jsonResponse = r.get('https://gdbrowser.com/api/profile/' + accountInput)
-    AccountInfo_dict = json.loads(AccountInfo_jsonResponse.text)
+def ShowAccountInfo(Account):
+    # Take vars from AccountInfo
+    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountInfo.AccountInfo(Account)
 
-    AccountInfo_Name = AccountInfo_dict['username']
-    accountId = accountInfo['accountID']
-    accountPlayerID = accountInfo['playerID']
-    accountStars = accountInfo['stars']
-    accountDiamonds = accountInfo['diamonds']
-    accountOffCoins = accountInfo['coins']
-    accountUserCoins = accountInfo['userCoins']
-    accountDemons = accountInfo['demons']
-    accountCP = accountInfo['cp']
-    accountFriendRequests = accountInfo['friendRequests']
-    accountMessages = accountInfo['messages']
-    accountCommentHistory = accountInfo['commentHistory']
-    accountIsModerator = accountInfo['moderator']
-    accountYouTube = str(accountInfo['youtube'])
-    accountTwitter = str(accountInfo['twitter'])
-    accountTwitch = str(accountInfo['twitch'])
-
+    # Show info
     print()
-    print('Имя: ' + accountName)
-    print('ID аккаунта: ' + str(accountId))
-    print('ID игрока: ' + str(accountPlayerID))
-    print('Звёзд: ' + str(accountStars))
-    print('Алмазов: ' + str(accountDiamonds))
-    print('Оф. монеток: ' + str(accountOffCoins))
-    print('Польз. монеток: ' + str(accountUserCoins))
-    print('Демонов: ' + str(accountDemons))
-    print('КП: ' + str(accountCP))
-    if accountIsModerator == 0:
-        print('Аккаунт не является модератором.')
-    elif accountIsModerator == 1:
-        print('Аккаунт является обычным модератором. ')
-    elif accountIsModerator == 2:
-        print('Аккаунт является старшим модератором. ')
+    print(bold + 'Name: ' + r_style + AccountInfo_Name)
+    print(bold + 'Account ID: ' + r_style + AccountInfo_AccountID)
+    print(bold + 'Player ID: ' + r_style + AccountInfo_PlayerID)
+    print(bold + 'Stars: ' + r_style + AccountInfo_Stars)
+    print(bold + 'Diamonds: ' + r_style + AccountInfo_Diamonds)
+    print(bold + 'Coins: ' + r_style + AccountInfo_OffCoins)
+    print(bold + 'User coins: ' + r_style + AccountInfo_UserCoins)
+    print(bold + 'Demons: ' + r_style + AccountInfo_Demons)
+    print('Creator points: ' + AccountInfo_CP)
+    if AccountInfo_IsModerator == 0:
+        print(red + '✕ ' + r_color + bold + 'Moderator: ' + r_style + 'false')
+    elif AccountInfo_IsModerator == 1:
+        print(green + '☑ ' + r_color + bold + 'Moderator: ' + r_style + 'true, regular mod')
+    elif AccountInfo_IsModerator == 2:
+        print(green + '☑ ' + r_color + bold + 'Moderator: ' + r_style + 'true, elder mod')
     else:
-        print('moderator: Недостоверный ответ от сервера. ')
+        print(bold + 'Moderator: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     print()
 
-    print('Приватность: ')
-    if accountFriendRequests == True:
-        print('Пользователь разрешил добавлять себя в друзья.')
-    else:
-        print('Пользователь запретил добавлять себя в друзья.')
+    # Privacy block
+    print('Privacy: ')
 
-    if accountMessages == 'all':
-        print('Пользователь разрешил писать ему сообщения всем.')
-    elif accountMessages == 'friends':
-        print('Пользователь разрешил писать ему сообщения только друзьям.')
-    elif accountMessages == 'off':
-        print('Пользователь запретил писать ему сообщения.')
+    # Friend requests
+    if AccountInfo_Privacy_FriendRequests == True:
+        print(green + '☑ ' + r_color + bold + 'Friend requests: ' + r_style + 'allowed')
     else:
-        print('accountMessages: Недостоверный ответ от сервера.')
+        print(red + '✕ ' + r_color + bold + 'Friend requests: ' + r_style + 'not allowed')
 
-    if accountCommentHistory == 'all':
-        print('Пользователь разрешил всем смотреть историю комментариев.')
-    elif accountCommentHistory == 'friends':
-        print('Пользователь разрешил смотреть историю комментариев только друзьям.')
-    elif accountCommentHistory == 'off':
-        print('Пользователь запретил смотреть историю комментариев.')
+    # Messages
+    if AccountInfo_Privacy_Messages == 'all':
+        print(green + '☑ ' + r_color + bold + 'Messages: ' + r_style + 'anyone')
+    elif AccountInfo_Privacy_Messages == 'friends':
+        print(yellow + '□ ' + r_color + bold + 'Messages: ' + r_style + 'only friends')
+    elif AccountInfo_Privacy_Messages == 'off':
+        print(red + '✕ ' + r_color + bold + 'Messages: ' + r_style + 'off')
     else:
-        print('accountCommentHistory: Недостоверный ответ от сервера.')
+        print(bold + 'Messages: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+
+    # Comment history
+    if AccountInfo_Privacy_CommentHistory == 'all':
+        print(green + '☑ ' + r_color + bold + 'Comment history: ' + r_style + 'anyone')
+    elif AccountInfo_Privacy_CommentHistory == 'friends':
+        print(yellow + '□ ' + r_color + bold + 'Comment history: ' + r_style + 'only friends')
+    elif AccountInfo_Privacy_CommentHistory == 'off':
+        print(red + '✕ ' + r_color + bold + 'Comment history: ' + r_style + 'off')
+    else:
+        print(bold + 'Comment history: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     print()
 
-    print('Соцсети:')
-    if accountYouTube != 'None':
-        print('YouTube: https://youtube.com/channel/' + accountYouTube)
+    # Social media
+    print('Social media:')
+    
+    # YouTube
+    if AccountInfo_SM_YouTube != 'None':
+        print(bold + 'YouTube: ' + r_style + 'https://youtube.com/channel/' + AccountInfo_SM_YouTube)
     else:
-        print('К аккаунту не привязан YouTube.')
-    if accountTwitter != 'None':
-        print('Twitter: https://twitter.com/' + accountTwitter)
+        print(bold + 'YouTube: ' + r_style + 'not linked.')
+
+    # Twitter
+    if AccountInfo_SM_Twitter != 'None':
+        print(bold + 'Twitter: ' + r_style + 'https://twitter.com/' + AccountInfo_SM_Twitter)
     else:
-        print('К аккаунту не привязан Twitter.')
-    if accountTwitch != 'None':
-        print('Twitch: https://twitch.tv/' + accountTwitch)
+        print(bold + 'Twitter: ' + r_style + 'not linked.')
+
+    # Twitch
+    if AccountInfo_SM_Twitch != 'None':
+        print(bold + 'Twitch: ' + r_style + 'https://twitch.tv/' + AccountInfo_SM_Twitch)
     else:
-        print('К аккаунту не привязан Twitch.')
+        print(bold + 'Twitch: ' + r_style + 'not linked. ')
     print()
 
 
-def levelExportJson():
-    levelExportJsonInput = input('Выберите уровень: ')
-    levelExportJsonGet = r.get(
-        'https://gdbrowser.com/api/search/' +
-        levelExportJsonInput +
-        '?count=1')
-    levelExportJsonFile = open(levelExportJsonInput + '.json', 'w')
-    levelExportJsonFile.write(levelExportJsonGet.text)
-    levelExportJsonFile.close()
-    print('Успешно!')
+def ExportLevelJson(Level):
+    LevelExportJson_Content = ExportJson.LevelExportJson(Level)
+    LevelExportJson_File = open(Level + '.json', 'w')
+    LevelExportJson_File.write(LevelExportJson_Content)
+    LevelExportJson_File.close()
+    print('Success!')
 
 
-def accountExportJson():
-    accountExportJsonInput = input('Выберите аккаунт: ')
-    accountExportJsonGet = r.get(
-        'https://gdbrowser.com/api/profile/' +
-        accountExportJsonInput)
-    accountExportJsonFile = open(accountExportJsonInput + '.json', 'w')
-    accountExportJsonFile.write(accountExportJsonGet.text)
-    accountExportJsonFile.close()
-    print('Успешно!')
+def ExportAccountJson(Account):
+    AccountExportJson_Content = ExportJson.AccountExportJson(Account)
+    AccountExportJson_File = open(Account + '.json', 'w')
+    AccountExportJson_File.write(AccountExportJson_Content)
+    AccountExportJson_File.close()
+    print('Success!')
 
 
-def LevelInfoDebug():
-    print('!!! ВКЛЮЧЕН РЕЖИМ РАЗРАБОТЧИКА !!!')
-    levelInput = input('Введите название уровня или ID: ')
-    levelJson = r.get(
-        'https://gdbrowser.com/api/search/' +
-        levelInput +
-        '?count=1')
-    LevelInfo_dict = json.loads(levelJson.text)
+def LevelInfoDebug(Level):
+    print(bold + '!!! DEBUG MODE ON !!!' + r_style)
 
+    print(debug_info + bold + 'Calling LevelInfo.LevelInfo(Level) to get variables...' + r_style)
+    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelInfo.LevelInfo(Level)
+    print(debug_success + bold + 'Success!' + r_style)
     print()
-    print(
-        'Request sent to: https://gdbrowser.com/api/search/' +
-        levelInput +
-        '?count=1')
-    print('API response:')
-    print(levelJson.text)
+    print(debug_info + bold + 'Server response code: ' + str(LevelInfo_jsonResponse) + r_style)
+    print(debug_info + bold + 'Server response content: ' + r_style)
+    print(LevelInfo_jsonResponse.text)
     print()
-    print('Converted to dict:')
+    print(debug_info + bold + 'Parsing...' + r_style)
     print(LevelInfo_dict)
-
-    levelName = LevelInfo_dict[0]['name']
-    levelId = LevelInfo_dict[0]['id']
-    levelDescription = LevelInfo_dict[0]['description']
-    levelCreator = LevelInfo_dict[0]['author']
-    levelDifficulty = LevelInfo_dict[0]['difficulty']
-    levelDownloads = LevelInfo_dict[0]['downloads']
-    levelLikes = LevelInfo_dict[0]['likes']
-    levelLength = LevelInfo_dict[0]['length']
-    levelSongID = LevelInfo_dict[0]['customSong']
-    levelSongAuthor = LevelInfo_dict[0]['songAuthor']
-    levelSongName = LevelInfo_dict[0]['songName']
-    levelObjects = LevelInfo_dict[0]['objects']
-    levelFeatured = LevelInfo_dict[0]['featured']
-    levelEpic = LevelInfo_dict[0]['epic']
+    print()
+    print(debug_success + bold + 'Success!' + r_style)
 
     print()
-    print('In vars:')
-    print('levelName: ' + levelName)
-    print('levelId: ' + levelId)
-    print('levelDescription: ' + levelDescription)
-    print('levelCreator: ' + levelCreator)
-    print('levelDifficulty: ' + levelDifficulty)
-    print('levelDownloads: ' + str(levelDownloads))
-    print('levelLikes: ' + str(levelLikes))
-    print('levelLength: ' + levelLength)
-    print('levelMusic: ' + levelSongAuthor + ' - ' + levelSongName)
-    print('levelSongID: ' + str(levelSongID))
-    print(
-        'levelMusicNG: https://www.newgrounds.com/audio/listen/' +
-        str(levelSongID))
-    if levelObjects == 0:
-        print('levelObjects = 0')
+    print(bold + 'LevelInfo_Name: ' + r_style + LevelInfo_Name)
+    print(bold + 'LevelInfo_ID: ' + r_style + LevelInfo_ID)
+    print(bold + 'LevelInfo_Description: ' + r_style + LevelInfo_Description)
+    print(bold + 'LevelInfo_Creator: ' + r_style + LevelInfo_Creator)
+    print(bold + 'LevelInfo_Difficulty: ' + r_style + LevelInfo_Difficulty)
+    if LevelInfo_isFeatured == True:
+        print(green + '☑ ' + r_color + bold + 'LevelInfo_isFeatured: ' + r_style + 'True')
+    elif LevelInfo_isFeatured == False:
+        print(red + '✕ ' + r_color + bold + 'LevelInfo_isFeatured: ' + r_style + 'False')
     else:
-        print(str(levelObjects) + ' objects')
+        print(bold + 'LevelInfo_isFeatured: ' + r_style + '"else" state in the code happened.')
+        print(debug_fail + bold + "Looks like there's a problem with LevelInfo_isFeatured." + r_style)
 
-    if levelFeatured == True:
-        print('levelFeatured: True')
-    elif levelFeatured == False:
-        print('levelFeatured: False')
+    if LevelInfo_isEpic == True:
+        print(green + '☑ ' + r_color + bold + 'LevelInfo_isEpic: ' + r_style + 'true')
+    elif LevelInfo_isEpic == False:
+        print(red + '✕ ' + r_color + bold + 'LevelInfo_isEpic: ' + r_style + 'false')
     else:
-        print('wrong_response')
-
-    if levelEpic == True:
-        print('levelEpic: True')
-    elif levelEpic == False:
-        print('levelEpic: False')
+        print(bold + 'LevelInfo_isEpic: ' + r_style + '"else" state in the code happened.')
+        print(debug_fail + bold + "Looks like there's a problem with LevelInfo_isEpic." + r_style)
+    
+    print(bold + 'LevelInfo_Downloads: ' + r_style + LevelInfo_Downloads)
+    print(bold + 'LevelInfo_Likes: ' + r_style + LevelInfo_Likes)
+    print(bold + 'LevelInfo_Length: ' + r_style + LevelInfo_Length)
+    print(bold + 'LevelInfo_Song: ' + r_style + LevelInfo_Song)
+    print(bold +'LevelInfo_SongID:  ' + r_style + LevelInfo_SongID)
+    print(bold + 'LevelInfo_SongNewgroundsLink: ' + r_style + LevelInfo_SongNewgroundsLink)
+    
+    if LevelInfo_Objects == '0':
+        print(bold + 'LevelInfo_Objects: ' + r_style + '0')
+        print(debug_info + bold + '0 objects. It looks like level copying is locked or unavailable.')
     else:
-        print('wrong_response')
+        print(bold + 'LevelInfo_Objects: ' + r_style + LevelInfo_Objects)
     print()
 
 
@@ -435,29 +392,32 @@ def accountIconDL():
         print('Успешно!')
 
 
-print('GDInfo, v1.4')
-print('Доступные опции:')
-print('1. вывести информацию об уровне')
-print('2. вывести информацию о пользователе')
-print('3. экспортировать информацию об уровне в JSON-файл')
-print('4. экспортировать информацию об аккаунте в JSON-файл')
-print('5. вывести информацию об уровне (режим разработчика)')
-print('6. вывести информацию о пользователе (режим разработчика)')
-print('7. скачать иконку пользователя')
+print(bold + yellow + 'GDInfo, v1.99' + r_color + r_style + dim + '  by kelptaken' + r_style)
+print(bold + 'Available options:' + r_style)
+print(bold + '1. ' + r_style + 'Level info')
+print(bold + '2. ' + r_style + 'Account info')
+print(bold + '3. ' + r_style + 'Export level info in JSON')
+print(bold + '4. ' + r_style + 'Export account info in JSON')
+print(bold + '5. ' + r_style + 'Level info ' + dim + '(debug mode)' + r_style)
+print(bold + '6. ' + r_style + 'Account info ' + dim + '(debug mode)' + r_style)
+print(bold + '7. ' + r_style + 'Download user icon')
 
 while True:
     choiceInput = input('> ')
     if choiceInput == '1':
         LevelInput = input('Level name or ID: ')
-        LevelInfo(LevelInput)
+        ShowLevelInfo(LevelInput)
     elif choiceInput == '2':
-        accountSearch()
+        AccountInput = input('Account name or ID: ')
+        ShowAccountInfo(AccountInput)
     elif choiceInput == '3':
-        levelExportJson()
+        LevelInput = input('Level name or ID: ')
+        ExportLevelJson(LevelInput)
     elif choiceInput == '4':
-        accountExportJson()
+        ExportAccountJson(AccountInput)
     elif choiceInput == '5':
-        LevelInfoDebug()
+        LevelInput = input('Level name or ID: ')
+        LevelInfoDebug(LevelInput)
     elif choiceInput == '6':
         accountSearchDebug()
     elif choiceInput == '7':
