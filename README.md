@@ -7,6 +7,15 @@ Geometry Dash swiss knife
 3. export to JSON
 4. download user's icons to PNG
 
+## 1.99 is out!
+- Now uses only English language
+- Colors!
+- Better code
+- Now do all the dirty tasks in separate modules, main script only needs to display the info from modules
+- A lot more... 
+#### Why 1.99?
+Because update 2.0 will FINALLY add comments, posts, likes and other missing functionality. 1.99 only has visual changes.
+
 ## Bugs
 Wow, you found it? Issues tab is for you!
 
