@@ -48,33 +48,30 @@ def LevelInfo_Output(Level):
     print(bold + 'Description: ' + r_style + LevelInfo_Description)
     print(bold + 'Creator: ' + r_style + LevelInfo_Creator)
     print(bold + 'Difficulty: ' + r_style + LevelInfo_Difficulty)
+
     if LevelInfo_isFeatured == True:
         print(green + '☑ ' + r_color + bold + 'Featured: ' + r_style + 'true')
     elif LevelInfo_isFeatured == False:
         print(red + '✕ ' + r_color + bold + 'Featured: ' + r_style + 'false')
     else:
-        print(bold + 'Featured: ' + r_style +
-              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Featured: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     if LevelInfo_isEpic == True:
         print(green + '☑ ' + r_color + bold + 'Epic: ' + r_style + 'true')
     elif LevelInfo_isEpic == False:
         print(red + '✕ ' + r_color + bold + 'Epic: ' + r_style + 'false')
     else:
-        print(bold + 'Epic: ' + r_style +
-              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Epic: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     print(bold + 'Downloads: ' + r_style + LevelInfo_Downloads)
     print(bold + 'Likes: ' + r_style + LevelInfo_Likes)
     print(bold + 'Length: ' + r_style + LevelInfo_Length)
     print(bold + 'Song: ' + r_style + LevelInfo_Song)
     print(bold + 'Song ID:  ' + r_style + LevelInfo_SongID)
-    print(bold + 'Song on Newgrounds: ' +
-          r_style + LevelInfo_SongNewgroundsLink)
+    print(bold + 'Song on Newgrounds: ' + r_style + LevelInfo_SongNewgroundsLink)
 
     if LevelInfo_Objects == '0':
-        print(bold + 'Objects: ' + r_style +
-              'unknown, level copying may be locked')
+        print(bold + 'Objects: ' + r_style + 'unknown, level copying may be locked')
     else:
         print(bold + 'Objects: ' + r_style + LevelInfo_Objects)
     print()
@@ -82,8 +79,7 @@ def LevelInfo_Output(Level):
 
 def AccountInfo_Output(Account):
     # Take vars from AccountInfo
-    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountInfo.AccountInfo(
-        Account)
+    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountInfo.AccountInfo(Account)
 
     # Show info
     print()
@@ -96,17 +92,15 @@ def AccountInfo_Output(Account):
     print(bold + 'User coins: ' + r_style + AccountInfo_UserCoins)
     print(bold + 'Demons: ' + r_style + AccountInfo_Demons)
     print('Creator points: ' + AccountInfo_CP)
+
     if AccountInfo_IsModerator == 0:
         print(red + '✕ ' + r_color + bold + 'Moderator: ' + r_style + 'false')
     elif AccountInfo_IsModerator == 1:
-        print(green + '☑ ' + r_color + bold +
-              'Moderator: ' + r_style + 'true, regular mod')
+        print(green + '☑ ' + r_color + bold + 'Moderator: ' + r_style + 'true, regular mod')
     elif AccountInfo_IsModerator == 2:
-        print(green + '☑ ' + r_color + bold +
-              'Moderator: ' + r_style + 'true, elder mod')
+        print(green + '☑ ' + r_color + bold + 'Moderator: ' + r_style + 'true, elder mod')
     else:
-        print(bold + 'Moderator: ' + r_style +
-              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Moderator: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     print()
 
@@ -115,38 +109,29 @@ def AccountInfo_Output(Account):
 
     # Friend requests
     if AccountInfo_Privacy_FriendRequests == True:
-        print(green + '☑ ' + r_color + bold +
-              'Friend requests: ' + r_style + 'allowed')
+        print(green + '☑ ' + r_color + bold + 'Friend requests: ' + r_style + 'allowed')
     else:
-        print(red + '✕ ' + r_color + bold +
-              'Friend requests: ' + r_style + 'not allowed')
+        print(red + '✕ ' + r_color + bold + 'Friend requests: ' + r_style + 'not allowed')
 
     # Messages
     if AccountInfo_Privacy_Messages == 'all':
-        print(green + '☑ ' + r_color + bold +
-              'Messages: ' + r_style + 'anyone')
+        print(green + '☑ ' + r_color + bold + 'Messages: ' + r_style + 'anyone')
     elif AccountInfo_Privacy_Messages == 'friends':
-        print(yellow + '□ ' + r_color + bold +
-              'Messages: ' + r_style + 'only friends')
+        print(yellow + '□ ' + r_color + bold + 'Messages: ' + r_style + 'only friends')
     elif AccountInfo_Privacy_Messages == 'off':
         print(red + '✕ ' + r_color + bold + 'Messages: ' + r_style + 'off')
     else:
-        print(bold + 'Messages: ' + r_style +
-              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Messages: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     # Comment history
     if AccountInfo_Privacy_CommentHistory == 'all':
-        print(green + '☑ ' + r_color + bold +
-              'Comment history: ' + r_style + 'anyone')
+        print(green + '☑ ' + r_color + bold + 'Comment history: ' + r_style + 'anyone')
     elif AccountInfo_Privacy_CommentHistory == 'friends':
-        print(yellow + '□ ' + r_color + bold +
-              'Comment history: ' + r_style + 'only friends')
+        print(yellow + '□ ' + r_color + bold + 'Comment history: ' + r_style + 'only friends')
     elif AccountInfo_Privacy_CommentHistory == 'off':
-        print(red + '✕ ' + r_color + bold +
-              'Comment history: ' + r_style + 'off')
+        print(red + '✕ ' + r_color + bold + 'Comment history: ' + r_style + 'off')
     else:
-        print(bold + 'Comment history: ' + r_style +
-              'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
+        print(bold + 'Comment history: ' + r_style + 'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
     print()
 
@@ -195,8 +180,7 @@ def ExportAccountJson(Account):
 def LevelInfoDebug(Level):
     print(bold + '!!! DEBUG MODE !!!' + r_style)
 
-    print(debug_info + bold +
-          'Calling LevelInfo.LevelInfo(Level) to get variables...' + r_style)
+    print(debug_info + bold + 'Calling LevelInfo.LevelInfo(Level) to get variables...' + r_style)
     LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelInfo.LevelInfo(Level)
     print(debug_success + bold + 'Success!' + r_style)
     print()
