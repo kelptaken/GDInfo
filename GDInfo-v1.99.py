@@ -10,6 +10,8 @@ from modules import AccountInfo
 from modules import ExportJson
 from modules import AccountIconDL
 
+init(convert=True) # without this colors on windows doesn't work 
+
 # Define some handy vars
 dim = Style.DIM
 red = Fore.RED
