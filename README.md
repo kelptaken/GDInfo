@@ -7,6 +7,10 @@ Geometry Dash swiss knife
 3. export to JSON
 4. download user's icons to PNG
 
+## Requirements
+- requests module
+- colorama module
+
 ## 1.99 is out!
 - Now uses only English language
 - Colors!
