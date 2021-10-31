@@ -10,7 +10,7 @@ from modules import AccountInfo
 from modules import ExportJson
 from modules import AccountIconDL
 
-# This is a test . . I'm being very productive.
+init(convert=True) # now colors work on windows!
 
 # Define some handy vars
 dim = Style.DIM
@@ -38,6 +38,7 @@ def ShowOptions():
     print(bold + '6. ' + r_style + 'Account info ' + dim + '(debug mode)' + r_style)
     print(bold + '7. ' + r_style + 'Download user icon')
 
+### FUNCTIONALITY ###
 
 def LevelInfo_Output(Level):
     # The thing below is taking all the variables from LevelInfo module
@@ -357,40 +358,75 @@ def DownloadIcon(Account, Type):
     open(Account + '_' + Type + '.png', 'wb').write(AccountIconDL_Icon)
     print('Success!')
 
-ShowOptions()
+### FUNCTIONALITY END ###
+
+### MENUs ###
+
+def Menu_Level():
+    print(yellow + bold + 'Select level operation:' + r_color + r_style)
+    print(bold + '1. ' + r_style + 'Level information')
+    print(bold + '2. ' + r_style + 'Level information ' + dim + '(debug mode)' + r_style)
+    print(bold + '3. ' + r_style + 'Export level info to JSON')
+
+def Menu_Account():
+    print(yellow + bold + 'Select account operation:' + r_color + r_style)
+    print(bold + '1. ' + r_style + 'Account information')
+    print(bold + '2. ' + r_style + 'Account information ' + dim + '(debug mode)' + r_style)
+    print(bold + '3. ' + r_style + 'Export account info to JSON')
+    print(bold + '4. ' + r_style + 'Download icon')
+
+def ShowGamemodes():
+    print('1. Cube')
+    print('2. Ship')
+    print('3. Ball')
+    print('4. UFO')
+    print('5. Wave')
+    print('6. Robot')
+    print('7. Spider')
+
+### MENUs END ###
+
+### SELECTOR ###
+
 while True:
-    choiceInput = input('> ')
-    if choiceInput == '1':
-        LevelInput = input('Level name or ID: ')
-        LevelInfo_Output(LevelInput)
-    elif choiceInput == '2':
-        AccountInput = input('Account name or ID: ')
-        AccountInfo_Output(AccountInput)
-    elif choiceInput == '3':
-        LevelInput = input('Level name or ID: ')
-        LevelExportJson_Output(LevelInput)
-    elif choiceInput == '4':
-        AccountInput = input('Account name or ID: ')
-        ExportAccountJson(AccountInput)
-    elif choiceInput == '5':
-        LevelInput = input('Level name or ID: ')
-        LevelInfoDebug(LevelInput)
-    elif choiceInput == '6':
-        AccountInput = input('Account name or ID: ')
-        AccountInfoDebug(AccountInput)
-    elif choiceInput == '7':
-        AccountIconDL_AccountInput = input(str('Account name or ID: '))
-        print('Select icon type:')
-        print('1. Cube')
-        print('2. Ship')
-        print('3. Ball')
-        print('4. UFO')
-        print('5. Wave')
-        print('6. Robot')
-        print('7. Spider')
-        AccountIconDL_TypeInput = input(str('Icon type: '))
-        DownloadIcon(AccountIconDL_AccountInput, AccountIconDL_TypeInput)
-    elif choiceInput == '0' or 'help' or 'options' or 'commands':
-        ShowOptions()
+    print(bold + yellow + 'Select operation type: ' + r_color + r_style)
+    print(bold + '1. ' + r_style + 'Level')
+    print(bold + '2. ' + r_style + 'Account')
+    ChoiceInput_Main = input('> ')
+    if ChoiceInput_Main == '1':
+        Menu_Level()
+        ChoiceInput_Level = input('Level operations > ')
+        if ChoiceInput_Level == '1':
+            LevelInfo_Input = input('Level name or ID: ')
+            LevelInfo_Output(LevelInfo_Input)
+        elif ChoiceInput_Level == '2':
+            LevelInfo_Input = input('Level name or ID: ')
+            LevelInfoDebug(LevelInfo_Input)
+        elif ChoiceInput_Level == '3':
+            LevelExportJson_Input = input ('Level name or ID: ')
+            LevelExportJson_Output(LevelExportJson_Input)
+        else:
+            print('Uhm...')
+    elif ChoiceInput_Main == '2':
+        Menu_Account()
+        ChoiceInput_Account = input('Account operations > ')
+        if ChoiceInput_Account == '1':
+            AccountInfo_Input = input('Account name or ID: ')
+            AccountInfo_Output(AccountInfo_Input)
+        elif ChoiceInput_Account == '2':
+            AccountInfo_Input = input('Level name or ID: ')
+            AccountInfoDebug(AccountInfo_Input)
+        elif ChoiceInput_Account == '3':
+            AccountExportJson_Input = input('Account name or ID: ')
+            ExportAccountJson(AccountExportJson_Input)
+        elif ChoiceInput_Account == '4':
+            DownloadIcon_Input_Name = input('Account name or ID: ')
+            ShowGamemodes()
+            DownloadIcon_Input_Type = input('Icon type: ')
+            DownloadIcon(DownloadIcon_Input_Name, DownloadIcon_Input_Type)
+        else:
+            print('Uhm...')
     else:
         print('Uhm...')
+
+### SELECTOR END ###
