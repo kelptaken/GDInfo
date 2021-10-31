@@ -27,3 +27,25 @@ def LevelInfo(Level):
     LevelInfo_SongNewgroundsLink = ('https://www.newgrounds.com/audio/listen/' + LevelInfo_SongID)
     
     return LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink
+
+def LevelExportJson(Level):
+    LevelExportJson_Response = r.get('https://gdbrowser.com/api/search/' + Level + '?count=1')
+    LevelExportJson_ResponseContent = LevelExportJson_Response.text
+
+    return LevelExportJson_ResponseContent
+
+
+def LevelComments(Level):
+    pass
+
+
+def LevelPost_Like(Level, Post):
+    pass
+
+
+def LevelPost_Dislike(Level, Post):
+    pass
+
+
+def LevelPost_Comment(Level):
+    pass
