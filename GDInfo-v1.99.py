@@ -5,8 +5,8 @@
 import requests as r
 import json
 from colorama import init, Fore, Style
-from modules import Level
-from modules import Account
+from modules import LevelModule
+from modules import AccountModule
 
 init(convert=True) # now colors work on windows!
 
@@ -40,7 +40,7 @@ def ShowOptions():
 
 def LevelInfo_Output(Level):
     # The thing below is taking all the variables from LevelInfo module
-    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = Level.LevelInfo(
+    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelModule.LevelInfo(
         Level)
 
     # Show the info
@@ -84,7 +84,7 @@ def LevelInfo_Output(Level):
 
 def AccountInfo_Output(Account):
     # Take vars from AccountInfo
-    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = Account.AccountInfo(
+    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountModule.AccountInfo(
         Account)
 
     # Show info
@@ -179,7 +179,7 @@ def AccountInfo_Output(Account):
 
 
 def LevelExportJson_Output(Level):
-    LevelExportJson_Content = Level.LevelExportJson(Level)
+    LevelExportJson_Content = LevelModule.LevelExportJson(Level)
     LevelExportJson_File = open(Level + '.json', 'w')
     LevelExportJson_File.write(LevelExportJson_Content)
     LevelExportJson_File.close()
@@ -187,7 +187,7 @@ def LevelExportJson_Output(Level):
 
 
 def ExportAccountJson(Account):
-    AccountExportJson_Content = Account.AccountExportJson(Account)
+    AccountExportJson_Content = AccountModule.AccountExportJson(Account)
     AccountExportJson_File = open(Account + '.json', 'w')
     AccountExportJson_File.write(AccountExportJson_Content)
     AccountExportJson_File.close()
@@ -198,8 +198,8 @@ def LevelInfoDebug(Level):
     print(bold + '!!! DEBUG MODE !!!' + r_style)
 
     print(debug_info + bold +
-          'Calling Level.LevelInfo(Level) to get variables...' + r_style)
-    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = Level.LevelInfo(Level)
+          'Calling LevelModule.LevelInfo(Level) to get variables...' + r_style)
+    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelModule.LevelInfo(Level)
     print(debug_success + bold + 'Success!' + r_style)
     print()
     print(debug_info + bold + 'Server response code: ' + str(LevelInfo_jsonResponse) + r_style)
@@ -261,7 +261,7 @@ def LevelInfoDebug(Level):
 def AccountInfoDebug(Account):
     print(bold + '!!! DEBUG MODE !!!' + r_style)
     print(debug_info + bold + 'Calling Account.AccountInfo(Account) to get variables...' + r_style)
-    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = Account.AccountInfo(Account)
+    AccountInfo_jsonResponse, AccountInfo_dict, AccountInfo_Name, AccountInfo_AccountID, AccountInfo_PlayerID, AccountInfo_Stars, AccountInfo_Diamonds, AccountInfo_OffCoins, AccountInfo_UserCoins, AccountInfo_Demons, AccountInfo_CP, AccountInfo_IsModerator, AccountInfo_Privacy_FriendRequests, AccountInfo_Privacy_Messages, AccountInfo_Privacy_CommentHistory, AccountInfo_SM_YouTube, AccountInfo_SM_Twitter, AccountInfo_SM_Twitch = AccountModule.AccountInfo(Account)
     print(debug_success + bold + 'Success!' + r_style)
     print()
     print(debug_info + bold + 'Server response code: ' + r_style + str(AccountInfo_jsonResponse))
@@ -352,7 +352,7 @@ def AccountInfoDebug(Account):
 
 
 def DownloadIcon(Account, Type):
-    AccountIconDL_Icon = Account.AccountIconDL(Account, Type)
+    AccountIconDL_Icon = AccountModule.AccountIconDL(Account, Type)
     open(Account + '_' + Type + '.png', 'wb').write(AccountIconDL_Icon)
     print('Success!')
 
