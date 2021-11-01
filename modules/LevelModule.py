@@ -7,7 +7,7 @@ def LevelInfo(Level):
 
     # Native variables
     # P. S. dict entries that contain numbers are automatically converted to str for easy concatenating
-    LevelInfo_Name = LevelInfo_dict[0]['name']
+    LevelInfo_Name = str(LevelInfo_dict[0]['name'])
     LevelInfo_ID = str(LevelInfo_dict[0]['id'])
     LevelInfo_Description = LevelInfo_dict[0]['description']
     LevelInfo_Creator = LevelInfo_dict[0]['author']
