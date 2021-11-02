@@ -19,7 +19,7 @@ I wanted to add lists (comments, post, comment history, level searching), but re
 - Shows is the level large (more than 40,000 objects)
 2. Menu is now structured and divided to 3 steps.
 3. Now there are only 2 modules for level and account operations, new features are added as new functions in modules.
-4. Fixed the bug with official songs (issue #1)
+4. Fixed the bug with official songs (issue #2)
 
 ## Bugs
 Wow, you found it? Issues tab is for you!
