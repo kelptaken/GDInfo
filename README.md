@@ -1,4 +1,4 @@
-# GDInfo
+# <p align=center>GDInfo</p>
 Geometry Dash swiss knife
 
 ## But what can it do?
@@ -26,6 +26,3 @@ Wow, you found it? Issues tab is for you!
 
 ## Under the hood
 GDInfo is using GDBrowser.com's API
-
-## TO-DO
-1. Implement lists (posts, comments, search) and additional input (to make actions more structured)
