@@ -392,7 +392,6 @@ def DownloadIcon(Account, Type):
 ### MENUs ###
 
 def Menu_Level():
-    print(bold + yellow + 'GDInfo v2.0' + r_color + r_style + dim + 'by @kelptaken' + r_style)
     print(yellow + bold + 'Select level operation:' + r_color + r_style)
     print(bold + '1. ' + r_style + 'Level information')
     print(bold + '2. ' + r_style + 'Level information ' + dim + '(debug mode)' + r_style)
@@ -419,6 +418,7 @@ def ShowGamemodes():
 ### SELECTOR ###
 
 while True:
+    print(bold + yellow + 'GDInfo v2.0' + r_color + r_style + dim + 'by @kelptaken' + r_style)
     print(bold + yellow + 'Select operation type: ' + r_color + r_style)
     print(bold + '1. ' + r_style + 'Level')
     print(bold + '2. ' + r_style + 'Account')
