@@ -418,7 +418,7 @@ def ShowGamemodes():
 ### SELECTOR ###
 
 while True:
-    print(bold + yellow + 'GDInfo v2.0' + r_color + r_style + dim + 'by @kelptaken' + r_style)
+    print(bold + yellow + 'GDInfo v2.0' + r_color + r_style + dim + ' by @kelptaken' + r_style)
     print(bold + yellow + 'Select operation type: ' + r_color + r_style)
     print(bold + '1. ' + r_style + 'Level')
     print(bold + '2. ' + r_style + 'Account')
