@@ -2,7 +2,7 @@
 Geometry Dash swiss knife
 
 ## But what can it do?
-1. check full info about a level
+1. check full info about a level (including stars requested by creator, link to raw song MP3 and more)
 2. check full info about an account (including unique Player ID)
 3. export to JSON
 4. download user's icons to PNG
