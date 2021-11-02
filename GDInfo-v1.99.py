@@ -36,20 +36,30 @@ def ShowOptions():
     print(bold + '6. ' + r_style + 'Account info ' + dim + '(debug mode)' + r_style)
     print(bold + '7. ' + r_style + 'Download user icon')
 
+
 ### FUNCTIONALITY ###
+
 
 def LevelInfo_Output(Level):
     # The thing below is taking all the variables from LevelInfo module
-    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_Objects, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelModule.LevelInfo(
-        Level)
+    LevelInfo_jsonResponse, LevelInfo_dict, LevelInfo_Name, LevelInfo_ID, LevelInfo_Stars, LevelInfo_RequestedStars, LevelInfo_Orbs, LevelInfo_Diamonds, LevelInfo_GameVersion, LevelInfo_LevelVersion, LevelInfo_Description, LevelInfo_Creator, LevelInfo_Difficulty, LevelInfo_DemonListPosition, LevelInfo_Downloads, LevelInfo_Likes, LevelInfo_Coins, LevelInfo_verifiedCoins, LevelInfo_Length, LevelInfo_SongID, LevelInfo_SongCreator, LevelInfo_SongName, LevelInfo_SongSize, LevelInfo_SongRawLink, LevelInfo_Objects, LevelInfo_isLarge, LevelInfo_isFeatured, LevelInfo_isEpic, LevelInfo_Song, LevelInfo_SongNewgroundsLink = LevelModule.LevelInfoAdvanced(Level)
 
     # Show the info
     print()
     print(bold + 'Name: ' + r_style + LevelInfo_Name)
     print(bold + 'ID: ' + r_style + LevelInfo_ID)
+    print()
+    print(bold + 'You will get...' + r_style)
+    print('· ' + LevelInfo_Stars + ' stars (' + LevelInfo_RequestedStars + ' requested by creator)...')
+    print('· ' + LevelInfo_Orbs + ' orbs...')
+    print('· ...and ' + LevelInfo_Diamonds + ' diamonds for beating this level.')
+    print()
     print(bold + 'Description: ' + r_style + LevelInfo_Description)
     print(bold + 'Creator: ' + r_style + LevelInfo_Creator)
+    print(bold + 'Game version: ' + r_style + LevelInfo_GameVersion)
+    print(bold + 'Level version: '+ r_style + LevelInfo_LevelVersion)
     print(bold + 'Difficulty: ' + r_style + LevelInfo_Difficulty)
+    print(bold + 'Position in PointerCrate Demonlist: ' + r_style + LevelInfo_DemonListPosition)
     if LevelInfo_isFeatured == True:
         print(green + '☑ ' + r_color + bold + 'Featured: ' + r_style + 'true')
     elif LevelInfo_isFeatured == False:
@@ -68,17 +78,35 @@ def LevelInfo_Output(Level):
 
     print(bold + 'Downloads: ' + r_style + LevelInfo_Downloads)
     print(bold + 'Likes: ' + r_style + LevelInfo_Likes)
+    print(bold + 'Coins: ' + r_style + LevelInfo_Coins)
+
+    if LevelInfo_verifiedCoins == True:
+        print(bold + 'Coins' + r_style + ' are verified.')
+    elif LevelInfo_verifiedCoins == False:
+        print(bold + 'Coins' + r_style + ' are NOT verified.')
+    else:
+        print(bold + 'Coins' + r_style + ' are, uhm... else statement just happened in the code. Report this to @kelptaken.')
+    
     print(bold + 'Length: ' + r_style + LevelInfo_Length)
+
+    print()
     print(bold + 'Song: ' + r_style + LevelInfo_Song)
     print(bold + 'Song ID:  ' + r_style + LevelInfo_SongID)
-    print(bold + 'Song on Newgrounds: ' +
-          r_style + LevelInfo_SongNewgroundsLink)
+    print(bold + 'Song on Newgrounds: ' + r_style + LevelInfo_SongNewgroundsLink)
+    print(bold + 'Song size: ' + r_style + LevelInfo_SongSize)
+    print(bold + 'Raw link to song MP3: ' + r_style + LevelInfo_SongRawLink)
+    print()
 
     if LevelInfo_Objects == '0':
         print(bold + 'Objects: ' + r_style +
               'unknown, level copying may be locked')
     else:
         print(bold + 'Objects: ' + r_style + LevelInfo_Objects)
+
+    if LevelInfo_isLarge == True:
+        print(bold + 'Large (>40k objects): ' + r_style + 'true')
+    elif LevelInfo_isLarge == False:
+        print(bold + 'Large (>40k objects): ' + r_style + 'false')
     print()
 
 
