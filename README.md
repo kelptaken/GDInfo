@@ -1,5 +1,6 @@
 # <p align=center>GDInfo</p>
 Geometry Dash swiss knife
+This project is still under heavy development!
 
 ## But what can it do?
 1. check full info about a level (including stars requested by creator, link to raw song MP3 and more)
