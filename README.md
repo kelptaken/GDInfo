@@ -1,7 +1,9 @@
 # <p align=center>GDInfo</p>
-Geometry Dash swiss knife
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/kelptaken/GDInfo) [![Latest release](https://badgen.net/github/release/Naereen/Strapdown.js)](https://github.com/kelptaken/GDInfo/releases) [![GitHub latest commit](https://badgen.net/github/last-commit/Naereen/Strapdown.js)](https://GitHub.com/kelptaken/GDInfo/commit/) [![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://GitHub.com/kelptaken/GDInfo/releases)
 
-This project is still under heavy development!
+**Geometry Dash swiss knife**
+
+**⚠** This project is still under heavy development!
 
 ## But what can it do?
 1. check full info about a level (including stars requested by creator, link to raw song MP3 and more)
