@@ -1,5 +1,5 @@
 # <p align=center>GDInfo</p>
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/kelptaken/GDInfo) [![Latest release](https://badgen.net/github/release/Naereen/Strapdown.js)](https://github.com/kelptaken/GDInfo/releases) [![GitHub latest commit](https://badgen.net/github/last-commit/Naereen/Strapdown.js)](https://GitHub.com/kelptaken/GDInfo/commit/) [![Github all releases](https://img.shields.io/github/downloads/Naereen/StrapDown.js/total.svg)](https://GitHub.com/kelptaken/GDInfo/releases)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/kelptaken/GDInfo) [![Latest release](https://badgen.net/github/release/Naereen/Strapdown.js)](https://github.com/kelptaken/GDInfo/releases)
 
 **Geometry Dash swiss knife**
 
