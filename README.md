@@ -11,19 +11,19 @@
 3. export to JSON
 4. download user's icons to PNG
 
-## 2.0 is out!
-I wanted to add lists (comments, post, comment history, level searching), but realised it is impossible and unfortunately, it will never be added in GDInfo. :(
+## How to install?
+- Ensure Python 3 is installed on your machine.
+- Clone the repository (or download as ZIP)
+- Go to the project directory
+- Execute ``pip3 install -r requirements.txt`` (this is done only once)
+- Execute ``python3 GDInfo-v2.01.py`` to run the script.
 
-1. Level info now shows a lot of additional info. (it is now 2x slower, but 2x more info!) (there are even more info listed in the API, such as the level data, but level downloading has been disabled by RobTop.)
-- Shows how much stars, orbs and diamonds you get for beating the level.
-- Shows the game version the level was released/updated in.
-- If the level is an Extreme Demon, shows demonlist position.
-- Shows how much coins are in the level and are they verified.
-- Shows the song size and raw link to directly song's MP3 file.
-- Shows is the level large (more than 40,000 objects)
-2. Menu is now structured and divided to 3 steps.
-3. Now there are only 2 modules for level and account operations, new features are added as new functions in modules.
-4. Fixed the bug with official songs (issue #2)
+## 2.01 is out!
+- Now the script asks for OS to fix colors
+- Cleaner code
+- Remove unused imports
+- Formatted with autopep8 
+- No more releases
 
 ## Bugs
 Wow, you found it? Issues tab is for you!
