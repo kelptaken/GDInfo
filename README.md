@@ -4,6 +4,7 @@
 **Geometry Dash swiss knife**
 
 **⚠** This project is still under heavy development!
+**⚠** 2.01 is SUPER outdated! Better use 2.1 from "next" branch,.but it has bugs.
 
 ## But what can it do?
 1. check full info about a level (including stars requested by creator, link to raw song MP3 and more)
