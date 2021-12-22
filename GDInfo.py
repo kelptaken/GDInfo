@@ -5,24 +5,21 @@
 # <!--- IMPORTS AND DEFINES ---------
 
 __VERSION__ = 'v2.1'
+
+import platform
+import sys
+
 from colorama import init, Fore, Style
-from argparse import Namespace
-import AccountModule, LevelModule
+from halo import Halo
 
-while True:
-    print('What is your OS?')
-    print('1. Windows')
-    print('2. Linux/macOS/other')
-    OSInput = input('OS > ')
-    if OSInput == '1':
-        init(convert=True)  # now colors work on windows!
-        break
-    elif OSInput == '2':
-        init()
-        break
-    else:
-        print('Uhm...')
+# from argparse import Namespace
+import AccountModule
+import LevelModule
 
+if platform.system() == 'Windows':
+    init(convert=True)
+else:
+    init()
 
 # Define some handy vars
 dim = Style.DIM
@@ -39,6 +36,8 @@ debug_fail = bold + red + '[!] ' + r_color + r_style
 info_true = green + '☑ ' + r_color
 info_false = red + '✕ ' + r_color
 
+print(bold + 'Detected system: ' + r_style + platform.system())
+
 
 # IMPORTS AND DEFINES --------->
 
@@ -46,14 +45,11 @@ info_false = red + '✕ ' + r_color
 # <!--- FUNCTIONALITY ---------
 
 
+@Halo(text='Loading', spinner='dots')
 def LevelInfo_Output(Level):
-    # The thing below is taking all the variables from LevelInfo module
-    print(debug_info + bold + 'Calling RetrieveLevelInfo...' + r_color + r_style)
     LevelInfo = LevelModule.RetrieveLevelInfo(Level)
-    print(debug_info + bold + 'Got the data.' + r_color + r_style)
-    print(debug_info + 'Success!')
 
-    # Show the info
+    # Show the info ----------
     print()
     print(bold + 'Name: ' + r_style + LevelInfo.name)
     print(bold + 'ID: ' + r_style + str(LevelInfo.id))
@@ -110,11 +106,17 @@ def LevelInfo_Output(Level):
 
     print()
     print(bold + 'Song: ' + r_style + LevelInfo.songAuthor + ' - ' + LevelInfo.songName)
-    print(bold + 'Song ID:  ' + r_style + str(LevelInfo.songID))
-    print(bold + 'Song on Newgrounds: ' +
-          r_style + 'https://newgrounds.com/audio/listen/' + str(LevelInfo.songID))
-    print(bold + 'Song size: ' + r_style + LevelInfo.songSize)
-    print(bold + 'Raw link to song MP3: ' + r_style + LevelInfo.songLink)
+    try:
+        print(bold + 'Song ID:  ' + r_style + str(LevelInfo.songID))
+        print(bold + 'Song on Newgrounds: ' +
+              r_style + 'https://newgrounds.com/audio/listen/' + str(LevelInfo.songID))
+        print(bold + 'Song size: ' + r_style + LevelInfo.songSize)
+        print(bold + 'Raw link to song MP3: ' + r_style + LevelInfo.songLink)
+    except BaseException:
+        print(bold + 'Song ID: N/A' + r_style)
+        print(bold + 'Song on Newgrounds: N/A' + r_style)
+        print(bold + 'Song size: N/A' + r_style)
+        print(bold + 'Raw link to song MP3: N/A')
     print()
 
     if LevelInfo.objects == '0':
@@ -130,15 +132,11 @@ def LevelInfo_Output(Level):
     print()
 
 
-
 def AccountInfo_Output(Account):
-    # Take vars from AccountInfo
-    print(debug_info + bold + 'Calling RetrieveAccountInfo...' + r_color + r_style)
+    # Take vars from AccountInfo ----------
     AccountInfo = AccountModule.RetrieveAccountInfo(Account)
-    print(debug_info + 'Got the data.')
-    print(debug_success + 'Success!')
 
-    # Show info
+    # Show info ----------
     print()
     print(bold + 'Name: ' + r_style + AccountInfo.username)
     print(bold + 'Account ID: ' + r_style + str(AccountInfo.accountID))
@@ -148,7 +146,7 @@ def AccountInfo_Output(Account):
     print(bold + 'Coins: ' + r_style + str(AccountInfo.coins))
     print(bold + 'User coins: ' + r_style + str(AccountInfo.userCoins))
     print(bold + 'Demons: ' + r_style + str(AccountInfo.demons))
-    print('Creator points: ' + str(AccountInfo.cp))
+    print(bold + 'Creator points: ' + r_style + str(AccountInfo.cp))
     if AccountInfo.moderator == 0:
         print(info_false + bold + 'Moderator: ' + r_style + 'false')
     elif AccountInfo.moderator == 1:
@@ -163,10 +161,10 @@ def AccountInfo_Output(Account):
 
     print()
 
-    # Privacy block
+    # Privacy block ----------
     print('Privacy: ')
 
-    # Friend requests
+    # Friend requests ----------
     if AccountInfo.friendRequests == True:
         print(info_true + bold +
               ' Friend requests: ' + r_style + 'allowed')
@@ -174,7 +172,7 @@ def AccountInfo_Output(Account):
         print(info_false + bold +
               ' Friend requests: ' + r_style + 'not allowed')
 
-    # Messages
+    # Messages ----------
     if AccountInfo.messages == 'all':
         print(info_true + bold +
               ' Messages: ' + r_style + 'anyone')
@@ -187,7 +185,7 @@ def AccountInfo_Output(Account):
         print(bold + ' Messages: ' + r_style +
               'unknown: "else" state in the code happened. It may be a server error, or another bug in my dirty code ¯\_(ツ)_/¯')
 
-    # Comment history
+    # Comment history ----------
     if AccountInfo.commentHistory == 'all':
         print(info_true + bold +
               ' Comment history: ' + r_style + 'anyone')
@@ -203,31 +201,30 @@ def AccountInfo_Output(Account):
 
     print()
 
-    # Social media
+    # Social media ----------
     print('Social media:')
 
-    # YouTube
+    # YouTube ----------
     if str(AccountInfo.youtube) != 'None':
         print(bold + 'YouTube: ' + r_style +
               'https://youtube.com/channel/' + AccountInfo.youtube)
     else:
         print(bold + 'YouTube: ' + r_style + 'not linked.')
 
-    # Twitter
+    # Twitter ----------
     if str(AccountInfo.twitter) != 'None':
         print(bold + 'Twitter: ' + r_style +
               'https://twitter.com/' + AccountInfo.twitter)
     else:
         print(bold + 'Twitter: ' + r_style + 'not linked.')
 
-    # Twitch
+    # Twitch ----------
     if str(AccountInfo.twitch) != 'None':
         print(bold + 'Twitch: ' + r_style +
               'https://twitch.tv/' + AccountInfo.twitch)
     else:
         print(bold + 'Twitch: ' + r_style + 'not linked. ')
     print()
-
 
 
 def LevelExportJson_Output(Level):
@@ -238,7 +235,6 @@ def LevelExportJson_Output(Level):
     print('Success!')
 
 
-
 def ExportAccountJson(Account):
     AccountExportJson_Content = AccountModule.AccountExportJson(Account)
     AccountExportJson_File = open(Account + '.json', 'w')
@@ -247,12 +243,10 @@ def ExportAccountJson(Account):
     print('Success!')
 
 
-
 def DownloadIcon(Account, Type):
     AccountIconDL_Icon = AccountModule.AccountIconDL(Account, Type)
     open(Account + '_' + Type + '.png', 'wb').write(AccountIconDL_Icon)
     print('Success!')
-
 
 
 # FUNCTIONALITY --------->
@@ -264,17 +258,13 @@ def DownloadIcon(Account, Type):
 def Menu_Level():
     print(yellow + bold + 'Select level operation:' + r_color + r_style)
     print(bold + '1. ' + r_style + 'Level information')
-    print(bold + '2. ' + r_style + 'Level information ' +
-          dim + '(debug mode)' + r_style)
-    print(bold + '3. ' + r_style + 'Export level info to JSON')
+    print(bold + '2. ' + r_style + 'Export level info to JSON')
 
 
 def Menu_Account():
     print(yellow + bold + 'Select account operation:' + r_color + r_style)
     print(bold + '1. ' + r_style + 'Account information')
-    print(bold + '2. ' + r_style + 'Account information ' +
-          dim + '(debug mode)' + r_style)
-    print(bold + '3. ' + r_style + 'Export account info to JSON')
+    print(bold + '2. ' + r_style + 'Export account info to JSON')
     print(bold + '4. ' + r_style + 'Download icon')
 
 
@@ -294,7 +284,7 @@ def ShowGamemodes():
 # <?--- SELECTOR ---------
 
 
-while True:
+def returnToMonke():
     print(bold + yellow + 'GDInfo ' + __VERSION__ + r_color +
           r_style + dim + ' by @kelptaken' + r_style)
     print(bold + yellow + 'Select operation type: ' + r_color + r_style)
@@ -306,44 +296,104 @@ while True:
     if ChoiceInput_Main == '1':
         Menu_Level()
         ChoiceInput_Level = input('Level operations > ')
-        if ChoiceInput_Level == '1':
-            LevelInfo_Input = input('Level name or ID: ')
-            LevelInfo_Output(LevelInfo_Input)  # Level info
-        elif ChoiceInput_Level == '2':
-            LevelInfo_Input = input('Level name or ID: ')
-            LevelInfoDebug(LevelInfo_Input)  # Level info (debug)
-        elif ChoiceInput_Level == '3':
-            LevelExportJson_Input = input('Level name or ID: ')
-            # Level info export to JSON
-            LevelExportJson_Output(LevelExportJson_Input)
-        else:
-            print('Uhm...')
+
+        try:
+            match ChoiceInput_Level:
+                case '1':
+                    LevelInfo_Input = input('Level name or ID: ')
+                    LevelInfo_Output(LevelInfo_Input)  # Level info
+
+                case '2':
+                    LevelExportJson_Input = input('Level name or ID: ')
+                    LevelExportJson_Output(LevelExportJson_Input)
+
+                case _:
+                    print('Uhm...')  # ERROR1
+        except BaseException:
+            exit("Looks like your Python version is 3.9 or below. Please install Python 3.10")  # ERROR10
 
     # ACCOUNT block
     elif ChoiceInput_Main == '2':
         Menu_Account()
         ChoiceInput_Account = input('Account operations > ')
-        if ChoiceInput_Account == '1':
-            AccountInfo_Input = input('Account name or ID: ')
-            AccountInfo_Output(AccountInfo_Input)  # Account info
-        elif ChoiceInput_Account == '2':
-            AccountInfo_Input = input('Level name or ID: ')
-            AccountInfoDebug(AccountInfo_Input)  # Account info (debug)
-        elif ChoiceInput_Account == '3':
-            AccountExportJson_Input = input('Account name or ID: ')
-            # Export account info to JSON
-            ExportAccountJson(AccountExportJson_Input)
-        elif ChoiceInput_Account == '4':
-            DownloadIcon_Input_Name = input('Account name or ID: ')
-            ShowGamemodes()
-            DownloadIcon_Input_Type = input('Icon type: ')
-            DownloadIcon(DownloadIcon_Input_Name,
-                         DownloadIcon_Input_Type)  # Download icon
-        else:
-            print('Uhm...')
+
+        try:
+            match ChoiceInput_Account:
+                case '1':
+                    AccountInfo_Input = input('Account name or ID: ')
+                    AccountInfo_Output(AccountInfo_Input)  # Account info
+
+                case '2':
+                    AccountExportJson_Input = input('Account name or ID: ')
+                    # Export account info to JSON
+                    ExportAccountJson(AccountExportJson_Input)
+
+                case '3':
+                    DownloadIcon_Input_Name = input('Account name or ID: ')
+                    ShowGamemodes()
+                    DownloadIcon_Input_Type = input('Icon type: ')
+                    DownloadIcon(DownloadIcon_Input_Name,
+                                 DownloadIcon_Input_Type)  # Download icon
+
+                case _:
+                    print('Uhm...')  # ERROR2
+        except BaseException:
+            exit("Looks like your Python version is 3.9 or below. Please install Python 3.10")  # ERROR11
     else:
-        print('Uhm...')
+        print('Uhm...')  # ERROR3
 
 
 # SELECTOR --------->
 
+global climode
+
+try:
+    if sys.argv[1] == 'cli':
+        climode = True
+        print(bold + 'Entering CLI mode.' + r_style)
+    else:
+        climode = False
+except IndexError:
+    climode = False
+
+if climode == False:
+    try:
+        while True:
+            returnToMonke()
+    except KeyboardInterrupt:
+        exit('\nBye!')
+else:
+
+    # CLI mode. ----------
+
+    try:
+        if sys.argv[2] == 'level':
+
+            if sys.argv[3] == 'info':
+                LevelInfo_Output(sys.argv[4])
+
+            elif sys.argv[3] == 'json':
+                LevelExportJson_Output(sys.argv[4])
+
+            else:
+                print('Uhm...')  # ERROR4
+
+        elif sys.argv[2] == 'account':
+
+            if sys.argv[3] == 'info':
+                AccountInfo_Output(sys.argv[4])
+
+            elif sys.argv[3] == 'json':
+                ExportAccountJson(sys.argv[4])
+
+            elif sys.argv[3] == 'icon':
+                DownloadIcon(sys.argv[5], sys.argv[4])
+
+            else:
+                print('Uhm...')  # ERROR5
+
+        else:
+            print('Uhm...')
+
+    except IndexError:
+        print('Uhm...')  # ERROR6
